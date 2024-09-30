@@ -1,42 +1,24 @@
 #include "extPersonType.h"
+#include <iostream>
 
-// Default constructor
-extPersonType::extPersonType() : firstName(""), lastName(""), phoneNumber(""), relationship("Friend") {}
+extPersonType::extPersonType() : firstName(""), lastName(""), relationship("") {}
 
-// Constructor with parameters
-extPersonType::extPersonType(string fName, string lName, int bMonth, int bDay, int bYear,
-    string street, string city, string state, int zip,
-    string phone, string relation)
-    : firstName(fName), lastName(lName), birthDate(bMonth, bDay, bYear), address(street, city, state, zip), phoneNumber(phone) {
-    setRelationship(relation);
+extPersonType::extPersonType(const std::string& fName, const std::string& lName,
+    const dateType& bDate, const std::string& rel)
+    : addressType(), firstName(fName), lastName(lName), birthDate(bDate), relationship(rel) {}
+
+std::string extPersonType::getFirstName() const { return firstName; }
+std::string extPersonType::getLastName() const { return lastName; }
+dateType extPersonType::getBirthDate() const { return birthDate; }
+std::string extPersonType::getRelationship() const { return relationship; }
+
+std::istream& operator>>(std::istream& in, extPersonType& person) {
+    in >> person.firstName >> person.lastName >> person.birthDate >> person.relationship;
+    return in;
 }
 
-// Setters
-void extPersonType::setRelationship(string relation) {
-    if (relation == "Family" || relation == "Friend" || relation == "Business")
-        relationship = relation;
-    else
-        relationship = "Friend";  // Default value
-}
-
-void extPersonType::setPhoneNumber(string phone) {
-    phoneNumber = phone;
-}
-
-// Getters
-string extPersonType::getRelationship() const {
-    return relationship;
-}
-
-string extPersonType::getPhoneNumber() const {
-    return phoneNumber;
-}
-
-// Print function
-void extPersonType::print() const {
-    cout << firstName << " " << lastName << endl;
-    birthDate.print();
-    address.print();
-    cout << phoneNumber << endl;
-    cout << relationship << endl;
+std::ostream& operator<<(std::ostream& out, const extPersonType& person) {
+    out << person.firstName << " " << person.lastName << ", "
+        << person.birthDate << ", " << person.relationship;
+    return out;
 }

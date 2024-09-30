@@ -1,28 +1,23 @@
 #include <iostream>
-#include "extPersonType.h"
-
-using namespace std;
+#include "addressBookType.h"
 
 int main() {
-    cout << "Testing default constructor ... " << endl;
-    extPersonType defPerson;
-    defPerson.print();
-    cout << endl;
+    addressBookType addressBook;
 
-    cout << "Testing constructor with parameters ... " << endl;
-    extPersonType person("George", "Smith", 4, 30, 1994, "145 South Street, Apt. 5", "Hampton", "VA", 23554, "757-444-5555", "Friend");
-    person.print();
-    cout << endl;
+    addressBook.initEntries(); // Initialize with some sample entries
+    addressBook.print(); // Print all entries
 
-    cout << "Testing invalid relationship (Spouse) ... " << endl;
-    person.setRelationship("Spouse");
-    person.print();
-    cout << endl;
+    std::string firstName, lastName;
+    std::cout << "Enter first name and last name to search for a person: ";
+    std::cin >> firstName >> lastName;
 
-    cout << "Testing valid relationship (Business) ... " << endl;
-    person.setRelationship("Business");
-    person.print();  // <--- this line was cut off in the previous code
-    cout << endl;
+    extPersonType foundPerson = addressBook.findPerson(firstName, lastName);
+    if (foundPerson.getFirstName() != "") {
+        std::cout << "Found: " << foundPerson << std::endl;
+    }
+    else {
+        std::cout << "Person not found!" << std::endl;
+    }
 
     return 0;
 }

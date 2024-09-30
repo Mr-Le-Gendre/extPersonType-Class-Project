@@ -1,41 +1,29 @@
 #ifndef EXTPERSONTYPE_H
 #define EXTPERSONTYPE_H
 
-#include <iostream>
-#include <string>
-#include "dateType.h"
 #include "addressType.h"
+#include "dateType.h"
+#include <string>
 
-using namespace std;
-
-class extPersonType {
-private:
-    string firstName;
-    string lastName;
-    dateType birthDate;
-    addressType address;
-    string phoneNumber;
-    string relationship;
-
+class extPersonType : public addressType {
 public:
-    // Default constructor
     extPersonType();
+    extPersonType(const std::string& firstName, const std::string& lastName,
+        const dateType& birthDate, const std::string& relationship);
 
-    // Constructor with parameters
-    extPersonType(string fName, string lName, int bMonth, int bDay, int bYear,
-        string street, string city, string state, int zip,
-        string phone, string relation);
+    std::string getFirstName() const;
+    std::string getLastName() const;
+    dateType getBirthDate() const;
+    std::string getRelationship() const;
 
-    // Setters
-    void setRelationship(string relation);
-    void setPhoneNumber(string phone);
+    friend std::istream& operator>>(std::istream& in, extPersonType& person);
+    friend std::ostream& operator<<(std::ostream& out, const extPersonType& person);
 
-    // Getters
-    string getRelationship() const;
-    string getPhoneNumber() const;
-
-    // Print function
-    void print() const;
+private:
+    std::string firstName;
+    std::string lastName;
+    dateType birthDate;
+    std::string relationship;
 };
 
-#endif
+#endif // EXTPERSONTYPE_H
