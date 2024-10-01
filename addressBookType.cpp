@@ -1,47 +1,47 @@
 #include "addressBookType.h"
-#include <fstream>
+#include <iostream>
+#include <algorithm>
 
-void addressBookType::addPerson(const extPersonType& person) {
-    persons.push_back(person);
+// Add a person to the address book
+void addressBookType::addEntry(const extPersonType& person) {
+    entries.push_back(person);
 }
 
-void addressBookType::initEntries() {
-    // Initialize with some sample entries (you can modify or remove this)
-    addPerson(extPersonType("John", "Doe", dateType(1, 1, 1990), "Friend"));
-    addPerson(extPersonType("Jane", "Smith", dateType(2, 2, 1992), "Sister"));
-}
-
+// Print all entries
 void addressBookType::print() const {
-    for (const auto& person : persons) {
-        std::cout << person << std::endl;
+    for (const auto& person : entries) {
+        person.print();
+        std::cout << std::endl; // Add a line break between entries
     }
 }
 
-extPersonType addressBookType::findPerson(const std::string& firstName, const std::string& lastName) const {
-    for (const auto& person : persons) {
-        if (person.getFirstName() == firstName && person.getLastName() == lastName) {
-            return person;
+// Find a person by name
+void addressBookType::findPerson(const std::string& name) const {
+    for (const auto& person : entries) {
+        if (person.getName() == name) {
+            person.print();
+            return; // Exit after printing the first match
         }
     }
-    return extPersonType(); // Return an empty person if not found
+    std::cout << "Person not found." << std::endl;
 }
 
-std::vector<extPersonType> addressBookType::findBirthdays(int month) const {
-    std::vector<extPersonType> result;
-    for (const auto& person : persons) {
-        if (person.getBirthDate().getMonth() == month) {
-            result.push_back(person);
+// Display all entries with a given birth month
+void addressBookType::displayBirthdays(int month) const {
+    for (const auto& person : entries) {
+        if (person.getBirthMonth() == month) {
+            person.print();
+            std::cout << std::endl; // Add a line break between entries
         }
     }
-    return result;
 }
 
-std::vector<extPersonType> addressBookType::findRelations(const std::string& relation) const {
-    std::vector<extPersonType> result;
-    for (const auto& person : persons) {
-        if (person.getRelationship() == relation) {
-            result.push_back(person);
+// Display entries with a given relationship tag
+void addressBookType::displayByRelationship(const std::string& relationship) const {
+    for (const auto& person : entries) {
+        if (person.getRelationship() == relationship) {
+            person.print();
+            std::cout << std::endl; // Add a line break between entries
         }
     }
-    return result;
 }

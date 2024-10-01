@@ -1,22 +1,20 @@
 #ifndef ADDRESSBOOKTYPE_H
 #define ADDRESSBOOKTYPE_H
 
-#include "extPersonType.h"
 #include <vector>
 #include <string>
-#include <iostream>
+#include "extPersonType.h"
 
 class addressBookType {
-public:
-    void addPerson(const extPersonType& person);
-    void initEntries();
-    void print() const;
-    extPersonType findPerson(const std::string& firstName, const std::string& lastName) const;
-    std::vector<extPersonType> findBirthdays(int month) const;
-    std::vector<extPersonType> findRelations(const std::string& relation) const;
-
 private:
-    std::vector<extPersonType> persons;
+    std::vector<extPersonType> entries; // Vector to hold the entries
+
+public:
+    void addEntry(const extPersonType& person);
+    void print() const;
+    void findPerson(const std::string& name) const;
+    void displayBirthdays(int month) const;
+    void displayByRelationship(const std::string& relationship) const;
 };
 
-#endif // ADDRESSBOOKTYPE_H
+#endif
